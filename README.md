@@ -10,7 +10,7 @@
 
 ![crypto API类图](http://jisonami.org/images/Java_Security/Crypto/CryptoClassDiagram.png)
 
-### 实现对称密钥算法加解密
+### SymmetricCryptography实现对称密钥算法加解密
 
 #### 默认使用AES算法、128位密钥长度
 
@@ -27,7 +27,9 @@ System.out.println("解密后数据：" + decryptData);
 
 
 
-### 实现非对称密钥算法加解密
+### NonSymmetricCryptography实现非对称密钥算法加解密
 
 
-### 实现密钥协商算法加解密
+### KeyAgreementCryptography实现密钥协商算法加解密
+
+更详细的API请参考[crypto文档](/doc/index.html)
