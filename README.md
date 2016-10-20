@@ -32,4 +32,4 @@ System.out.println("解密后数据：" + decryptData);
 
 ### KeyAgreementCryptography实现密钥协商算法加解密
 
-更详细的API请参考[crypto文档](/doc/index.html)
+更详细的API请参考[crypto的JavaDoc文档](/doc)
