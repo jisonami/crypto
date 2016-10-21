@@ -3,12 +3,7 @@ package org.jisonami.crypto;
 import org.apache.commons.codec.binary.Base64;
 
 import java.io.UnsupportedEncodingException;
-import java.security.*;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
-import java.util.HashMap;
-import java.util.Map;
+import java.security.Key;
 
 /**
  * <p>Created by jisonami on 2016/10/14.</p>
@@ -21,7 +16,7 @@ import java.util.Map;
  * @see AbstractCryptography
  * @since 0.0.1
  */
-public class NonSymmetricCryptography extends AbstractCryptography{
+public class NonSymmetricCryptography extends AbstractNonSymmetricCryptography{
 
     public NonSymmetricCryptography() {
         getConfiguration().setKeyAlgorithm(Algorithms.RSA).setCipherAlgorithm(Algorithms.RSA_ECB_PKCS1PADDING).setKeySize(1024);
@@ -203,82 +198,4 @@ public class NonSymmetricCryptography extends AbstractCryptography{
         return this.decrypt(data, k);
     }
 
-    /**
-     * 将公钥二进制形式转换成公钥对象
-     * @param key 公钥的二进制形式
-     * @return 公钥对象
-     */
-    public PublicKey toPublicKey(byte[] key) {
-        X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(key);
-        KeyFactory keyFactory = null;
-        try {
-            keyFactory = KeyFactory.getInstance(getConfiguration().getKeyAlgorithm());
-        } catch (NoSuchAlgorithmException e) {
-            throw new CryptographyException(ExceptionInfo.NO_SUCH_ALGORITHM_EXCEPTION_INFO + getConfiguration().getKeyAlgorithm(), e);
-        }
-        try {
-            return keyFactory.generatePublic(x509EncodedKeySpec);
-        } catch (InvalidKeySpecException e) {
-            throw new CryptographyException(ExceptionInfo.INVALID_KEY_EXCEPTION_INFO + key.toString(), e);
-        }
-    }
-
-    /**
-     * 将私钥二进制形式转换成私钥对象
-     * @param key 私钥的二进制形式
-     * @return 私钥对象
-     */
-    public PrivateKey toPrivateKey(byte[] key){
-        PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(key);
-        KeyFactory keyFactory = null;
-        try {
-            keyFactory = KeyFactory.getInstance(getConfiguration().getKeyAlgorithm());
-        } catch (NoSuchAlgorithmException e) {
-            throw new CryptographyException(ExceptionInfo.NO_SUCH_ALGORITHM_EXCEPTION_INFO + getConfiguration().getKeyAlgorithm(), e);
-        }
-        try {
-            return keyFactory.generatePrivate(pkcs8EncodedKeySpec);
-        } catch (InvalidKeySpecException e) {
-            throw new CryptographyException(ExceptionInfo.INVALID_KEY_EXCEPTION_INFO + key.toString(), e);
-        }
-    }
-
-    /**
-     * 取得公钥
-     * @param keyMap 密钥对map
-     * @return 公钥的二进制形式
-     */
-    public byte[] getPublicKey(Map<String, Key> keyMap){
-        return keyMap.get(PUBLIC_KEY).getEncoded();
-    }
-
-    /**
-     * 取得私钥
-     * @param keyMap 密钥对map
-     * @return 私钥的二进制形式
-     */
-    public byte[] getPrivateKey(Map<String, Key> keyMap){
-        return keyMap.get(PRIVATE_KEY).getEncoded();
-    }
-
-    /**
-     * 生成秘钥对
-     * @return 密钥对
-     */
-    public Map<String, Key> initKey() {
-        KeyPairGenerator keyPairGenerator = null;
-        try {
-            keyPairGenerator = KeyPairGenerator.getInstance(getConfiguration().getKeyAlgorithm());
-        } catch (NoSuchAlgorithmException e) {
-            throw new CryptographyException(ExceptionInfo.NO_SUCH_ALGORITHM_EXCEPTION_INFO + getConfiguration().getKeyAlgorithm(), e);
-        }
-        keyPairGenerator.initialize(getConfiguration().getKeySize());
-        KeyPair keyPair = keyPairGenerator.generateKeyPair();
-        PrivateKey privateKey = keyPair.getPrivate();
-        PublicKey publicKey = keyPair.getPublic();
-        Map<String, Key> keyMap = new HashMap<String, Key>();
-        keyMap.put(PRIVATE_KEY, privateKey);
-        keyMap.put(PUBLIC_KEY, publicKey);
-        return keyMap;
-    }
 }

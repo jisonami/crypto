@@ -46,7 +46,7 @@ public class NonSymmetricCryptographyTest {
         BouncyCastleProvider bouncyCastleProvider = new BouncyCastleProvider();
         Security.addProvider(bouncyCastleProvider);
         Configuration configuration = new Configuration();
-        configuration.setKeyAlgorithm(Algorithms.ELGAMAL).setCipherAlgorithm(Algorithms.ELGAMAL_ECB_PKCS1PADDING).setKeySize(512).setProvider(bouncyCastleProvider);
+        configuration.setKeyAlgorithm(Algorithms.ELGAMAL).setCipherAlgorithm(Algorithms.ELGAMAL_ECB_PKCS1PADDING).setKeySize(512);
         NonSymmetricCryptography nonSymmetricCryptography = new NonSymmetricCryptography(configuration);
         Map<String,Key> keyMap = nonSymmetricCryptography.initKey();
         String privateKey = nonSymmetricCryptography.encodeKey(nonSymmetricCryptography.getPrivateKey(keyMap));

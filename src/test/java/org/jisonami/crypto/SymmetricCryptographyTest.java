@@ -134,7 +134,7 @@ public class SymmetricCryptographyTest {
         BouncyCastleProvider bouncyCastleProvider = new BouncyCastleProvider();
         Security.addProvider(bouncyCastleProvider);
         Configuration configuration = new Configuration();
-        configuration.setKeyAlgorithm(Algorithms.RC4).setCipherAlgorithm(Algorithms.RC4).setKeySize(128).setProvider(bouncyCastleProvider);
+        configuration.setKeyAlgorithm(Algorithms.RC4).setCipherAlgorithm(Algorithms.RC4).setKeySize(128);
         SymmetricCryptography symmetricCryptography = new SymmetricCryptography(configuration);
         String key = symmetricCryptography.encodeKey(symmetricCryptography.initKey());
         System.out.println("RC4密钥：" + key);
@@ -150,10 +150,10 @@ public class SymmetricCryptographyTest {
         BouncyCastleProvider bouncyCastleProvider = new BouncyCastleProvider();
         Security.addProvider(bouncyCastleProvider);
         Configuration configuration = new Configuration();
-        configuration.setKeyAlgorithm(Algorithms.IDEA).setCipherAlgorithm(Algorithms.IDEA).setKeySize(128).setProvider(bouncyCastleProvider);
+        configuration.setKeyAlgorithm(Algorithms.IDEA).setCipherAlgorithm(Algorithms.IDEA).setKeySize(128);
         SymmetricCryptography symmetricCryptography = new SymmetricCryptography(configuration);
         String key = symmetricCryptography.encodeKey(symmetricCryptography.initKey());
-        System.out.println("RC4密钥：" + key);
+        System.out.println("IDEA密钥：" + key);
         String encryptData = symmetricCryptography.encrypt(data, symmetricCryptography.decodeKey(key));
         System.out.println("加密前数据：" + data);
         System.out.println("加密后数据：" + encryptData);

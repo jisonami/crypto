@@ -8,6 +8,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 
 /**
  * <p>Created by jisonami on 2016/10/14.</p>
@@ -32,16 +33,33 @@ public class SymmetricCryptography extends AbstractCryptography
 	}
 
 	/**
+	 * 获取对称密钥生成器
+	 * @return 对称密钥生成器对象
+	 */
+	private KeyGenerator getKeyGenerator() {
+		KeyGenerator keyGenerator = null;
+		try {
+			if(getConfiguration().getProviderName() !=null && !"".equals(getConfiguration().getProviderName())){
+				keyGenerator = KeyGenerator.getInstance(getConfiguration().getKeyAlgorithm(), getConfiguration().getProviderName());
+			} else if (getConfiguration().getProvider() != null) {
+				keyGenerator = KeyGenerator.getInstance(getConfiguration().getKeyAlgorithm(), getConfiguration().getProvider());
+			} else {
+				keyGenerator = KeyGenerator.getInstance(getConfiguration().getKeyAlgorithm());
+			}
+			return keyGenerator;
+		} catch (NoSuchAlgorithmException e) {
+			throw new CryptographyException(ExceptionInfo.NO_SUCH_ALGORITHM_EXCEPTION_INFO + getConfiguration().getKeyAlgorithm(), e);
+		} catch (NoSuchProviderException e) {
+			throw new CryptographyException(ExceptionInfo.NO_SUCH_PROVIDER_EXCEPTION_INFO + getConfiguration().getProviderName(), e);
+		}
+	}
+
+	/**
 	 * 生成一个密钥
 	 * @return 密钥的二进制形式
      */
 	public byte[] initKey() {
-		KeyGenerator kg = null;
-		try {
-			kg = KeyGenerator.getInstance(getConfiguration().getKeyAlgorithm());
-		} catch (NoSuchAlgorithmException e) {
-			throw new CryptographyException(ExceptionInfo.NO_SUCH_ALGORITHM_EXCEPTION_INFO + getConfiguration().getKeyAlgorithm(), e);
-		}
+		KeyGenerator kg = getKeyGenerator();
 		kg.init(getConfiguration().getKeySize());
 		SecretKey secretKey = kg.generateKey();
 		return secretKey.getEncoded();

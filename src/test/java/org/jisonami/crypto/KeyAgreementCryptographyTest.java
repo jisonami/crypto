@@ -111,7 +111,7 @@ public class KeyAgreementCryptographyTest {
         BouncyCastleProvider bouncyCastleProvider = new BouncyCastleProvider();
         Security.addProvider(bouncyCastleProvider);
         Configuration configuration = new Configuration();
-        configuration.setKeyAlgorithm(Algorithms.ECDH).setCipherAlgorithm(Algorithms.DES).setKeySize(256).setProvider(bouncyCastleProvider);
+        configuration.setKeyAlgorithm(Algorithms.ECDH).setCipherAlgorithm(Algorithms.DES).setKeySize(256);
         KeyAgreementCryptography keyAgreementCryptography = new KeyAgreementCryptography(configuration);
         // 获取甲方密钥对
         Map<String,Key> keyMap = keyAgreementCryptography.initKey();

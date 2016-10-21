@@ -99,7 +99,7 @@ public class SignatureOperationTest {
         BouncyCastleProvider bouncyCastleProvider = new BouncyCastleProvider();
         Security.addProvider(bouncyCastleProvider);
         Configuration configuration = new Configuration();
-        configuration.setKeyAlgorithm(Algorithms.ECDSA).setKeySize(256).setProvider(bouncyCastleProvider);
+        configuration.setKeyAlgorithm(Algorithms.ECDSA).setKeySize(256);
         NonSymmetricCryptography nonSymmetricCryptography = new NonSymmetricCryptography(configuration);
         Map<String,Key> keyMap = nonSymmetricCryptography.initKey();
         String privateKey = nonSymmetricCryptography.encodeKey(nonSymmetricCryptography.getPrivateKey(keyMap));
@@ -118,7 +118,7 @@ public class SignatureOperationTest {
         BouncyCastleProvider bouncyCastleProvider = new BouncyCastleProvider();
         Security.addProvider(bouncyCastleProvider);
         Configuration configuration = new Configuration();
-        configuration.setKeyAlgorithm(Algorithms.ECDSA).setKeySize(256).setProvider(bouncyCastleProvider);
+        configuration.setKeyAlgorithm(Algorithms.ECDSA).setKeySize(256);
         NonSymmetricCryptography nonSymmetricCryptography = new NonSymmetricCryptography(configuration);
         Map<String,Key> keyMap = nonSymmetricCryptography.initKey();
         String privateKey = nonSymmetricCryptography.encodeKey(nonSymmetricCryptography.getPrivateKey(keyMap));
@@ -138,7 +138,7 @@ public class SignatureOperationTest {
         BouncyCastleProvider bouncyCastleProvider = new BouncyCastleProvider();
         Security.addProvider(bouncyCastleProvider);
         Configuration configuration = new Configuration();
-        configuration.setKeyAlgorithm(Algorithms.DSA).setKeySize(1024).setProvider(bouncyCastleProvider);
+        configuration.setKeyAlgorithm(Algorithms.DSA).setKeySize(1024);
         NonSymmetricCryptography nonSymmetricCryptography = new NonSymmetricCryptography(configuration);
         Map<String,Key> keyMap = nonSymmetricCryptography.initKey();
         String privateKey = nonSymmetricCryptography.encodeKey(nonSymmetricCryptography.getPrivateKey(keyMap));
