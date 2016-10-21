@@ -22,6 +22,13 @@ public interface Algorithms {
     String BLOWFISH_ECB_PKCS5PADDING = "Blowfish/ECB/PKCS5Padding";
     String IDEA = "IDEA";
 
+    // 基于口令的加解密算法PBE相关
+    String PBE_WITH_MD5_AND_DES = "PBEWithMD5AndDES";   // DES密钥默认长度56
+    String PBE_WITH_MD5_AND_TripleDES = "PBEWithMD5AndTripleDES";   // TripleDES密钥默认长度168
+    String PBE_WITH_SHA1_AND_DESede = "PBEWithSHA1AndDESede";   // DESede密钥默认长度168
+    String PBE_WITH_SHA1_AND_RC2_40 = "PBEWithSHA1AndRC2_40";   // RC2_40密钥默认长度128
+    String PBE_WITH_SHA_AND_IDEA_CBC = "PBEWithSHAAndIDEA-CBC"; // IDEA密钥默认长度128
+
      // 密钥协商算法相关
     String DH = "DH";
     String ECDH = "ECDH";

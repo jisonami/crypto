@@ -1,5 +1,7 @@
 package org.jisonami.crypto;
 
+import java.security.spec.InvalidKeySpecException;
+
 /**
  * <p>Created by jisonami on 2016/10/20.</p>
  * <p>抛出的异常信息</p>
@@ -24,4 +26,8 @@ public interface ExceptionInfo {
     String SIGNATURE_EXCEPTION_INFO = "SignatureException--签名异常";
 
     String NO_SUCH_PROVIDER_EXCEPTION_INFO = "NoSuchProviderException--没有这样的安全提供者";
+
+    String INVALID_KEYSPEC_EXCEPTION_INFO = "InvalidKeySpecException--无效的密钥规范异常";
+
+    String INVALID_ALGORITHM_PARAMETER_EXCEPTION_INFO = "InvalidAlgorithmParameterException--无效的算法参数规范异常";
 }

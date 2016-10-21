@@ -50,6 +50,11 @@ public class Configuration {
      */
     private String signatureAlgorithm;
 
+    /**
+     * PBE算法消息摘要迭代次数
+     */
+    private int pbeIterationCount;
+
     public String getCharset() {
         return charset;
     }
@@ -110,6 +115,14 @@ public class Configuration {
 
     public void setSignatureAlgorithm(String signatureAlgorithm) {
         this.signatureAlgorithm = signatureAlgorithm;
+    }
+
+    public int getPbeIterationCount() {
+        return pbeIterationCount;
+    }
+
+    public void setPbeIterationCount(int pbeIterationCount) {
+        this.pbeIterationCount = pbeIterationCount;
     }
 
     @Override

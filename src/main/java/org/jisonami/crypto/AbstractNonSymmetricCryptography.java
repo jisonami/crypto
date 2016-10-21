@@ -97,7 +97,7 @@ public abstract class AbstractNonSymmetricCryptography extends AbstractCryptogra
         try {
             return keyFactory.generatePublic(x509EncodedKeySpec);
         } catch (InvalidKeySpecException e) {
-            throw new CryptographyException(ExceptionInfo.INVALID_KEY_EXCEPTION_INFO + key.toString(), e);
+            throw new CryptographyException(ExceptionInfo.INVALID_KEYSPEC_EXCEPTION_INFO + key.toString(), e);
         }
     }
 
@@ -112,7 +112,7 @@ public abstract class AbstractNonSymmetricCryptography extends AbstractCryptogra
         try {
             return keyFactory.generatePrivate(pkcs8EncodedKeySpec);
         } catch (InvalidKeySpecException e) {
-            throw new CryptographyException(ExceptionInfo.INVALID_KEY_EXCEPTION_INFO + key.toString(), e);
+            throw new CryptographyException(ExceptionInfo.INVALID_KEYSPEC_EXCEPTION_INFO + key.toString(), e);
         }
     }
 

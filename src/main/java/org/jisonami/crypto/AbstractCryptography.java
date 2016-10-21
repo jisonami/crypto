@@ -6,10 +6,8 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
+import java.security.*;
+import java.security.spec.AlgorithmParameterSpec;
 
 /**
  * <p>Created by jisonami on 16-10-15.</p>
@@ -65,7 +63,7 @@ public abstract class AbstractCryptography {
      * @param key 密钥对象
      * @return 加密后的数据
      */
-    public byte[] encrypt(byte[] data, Key key) {
+    protected byte[] encrypt(byte[] data, Key key) {
         Cipher cipher = getCipher();
         try {
             cipher.init(Cipher.ENCRYPT_MODE, key);
@@ -82,17 +80,165 @@ public abstract class AbstractCryptography {
     }
 
     /**
+     * 加密操作
+     * @param data 需要加密的数据
+     * @param key 密钥对象
+     * @param algorithmParameterSpec 算法参数规范材料
+     * @return 加密后的数据
+     */
+    protected byte[] encrypt(byte[] data, Key key, AlgorithmParameterSpec algorithmParameterSpec) {
+        Cipher cipher = getCipher();
+        try {
+            cipher.init(Cipher.ENCRYPT_MODE, key, algorithmParameterSpec);
+        } catch (InvalidKeyException e) {
+            throw new CryptographyException(ExceptionInfo.INVALID_KEY_EXCEPTION_INFO + key.toString(), e);
+        } catch (InvalidAlgorithmParameterException e) {
+            throw new CryptographyException(ExceptionInfo.INVALID_ALGORITHM_PARAMETER_EXCEPTION_INFO + algorithmParameterSpec.toString(), e);
+        }
+        try {
+            return cipher.doFinal(data);
+        } catch (IllegalBlockSizeException e) {
+            throw new CryptographyException(ExceptionInfo.ILLEGAL_BLOCK_SIZE_EXCEPTION_INFO, e);
+        } catch (BadPaddingException e) {
+            throw new CryptographyException(ExceptionInfo.BAD_PADDING_EXCEPTION_INFO, e);
+        }
+    }
+
+    /**
+     * 加密操作
+     * @param data 需要加密的数据
+     * @param key 密钥对象
+     * @param secureRandom 安全随机数
+     * @return 加密后的数据
+     */
+    protected byte[] encrypt(byte[] data, Key key, SecureRandom secureRandom) {
+        Cipher cipher = getCipher();
+        try {
+            cipher.init(Cipher.ENCRYPT_MODE, key, secureRandom);
+        } catch (InvalidKeyException e) {
+            throw new CryptographyException(ExceptionInfo.INVALID_KEY_EXCEPTION_INFO + key.toString(), e);
+        }
+        try {
+            return cipher.doFinal(data);
+        } catch (IllegalBlockSizeException e) {
+            throw new CryptographyException(ExceptionInfo.ILLEGAL_BLOCK_SIZE_EXCEPTION_INFO, e);
+        } catch (BadPaddingException e) {
+            throw new CryptographyException(ExceptionInfo.BAD_PADDING_EXCEPTION_INFO, e);
+        }
+    }
+
+    /**
+     * 加密操作
+     * @param data 需要加密的数据
+     * @param key 密钥对象
+     * @param algorithmParameterSpec 算法参数规范材料
+     * @param secureRandom 安全随机数
+     * @return 加密后的数据
+     */
+    protected byte[] encrypt(byte[] data, Key key, AlgorithmParameterSpec algorithmParameterSpec, SecureRandom secureRandom) {
+        Cipher cipher = getCipher();
+        try {
+            cipher.init(Cipher.ENCRYPT_MODE, key, algorithmParameterSpec, secureRandom);
+        } catch (InvalidKeyException e) {
+            throw new CryptographyException(ExceptionInfo.INVALID_KEY_EXCEPTION_INFO + key.toString(), e);
+        } catch (InvalidAlgorithmParameterException e) {
+            throw new CryptographyException(ExceptionInfo.INVALID_ALGORITHM_PARAMETER_EXCEPTION_INFO + algorithmParameterSpec.toString(), e);
+        }
+        try {
+            return cipher.doFinal(data);
+        } catch (IllegalBlockSizeException e) {
+            throw new CryptographyException(ExceptionInfo.ILLEGAL_BLOCK_SIZE_EXCEPTION_INFO, e);
+        } catch (BadPaddingException e) {
+            throw new CryptographyException(ExceptionInfo.BAD_PADDING_EXCEPTION_INFO, e);
+        }
+    }
+
+    /**
      * 解密操作
      * @param data 需要解密的数据
      * @param key 密钥对象
      * @return 解密后的数据
      */
-    public byte[] decrypt(byte[] data, Key key) {
+    protected byte[] decrypt(byte[] data, Key key) {
         Cipher cipher = getCipher();
         try {
             cipher.init(Cipher.DECRYPT_MODE, key);
         } catch (InvalidKeyException e) {
             throw new CryptographyException(ExceptionInfo.INVALID_KEY_EXCEPTION_INFO + key.toString(), e);
+        }
+        try {
+            return cipher.doFinal(data);
+        } catch (IllegalBlockSizeException e) {
+            throw new CryptographyException(ExceptionInfo.ILLEGAL_BLOCK_SIZE_EXCEPTION_INFO, e);
+        } catch (BadPaddingException e) {
+            throw new CryptographyException(ExceptionInfo.BAD_PADDING_EXCEPTION_INFO, e);
+        }
+    }
+
+    /**
+     * 解密操作
+     * @param data 需要解密的数据
+     * @param key 密钥对象
+     * @param algorithmParameterSpec 算法参数规范材料
+     * @return 解密后的数据
+     */
+    protected byte[] decrypt(byte[] data, Key key, AlgorithmParameterSpec algorithmParameterSpec) {
+        Cipher cipher = getCipher();
+        try {
+            cipher.init(Cipher.DECRYPT_MODE, key, algorithmParameterSpec);
+        } catch (InvalidKeyException e) {
+            throw new CryptographyException(ExceptionInfo.INVALID_KEY_EXCEPTION_INFO + key.toString(), e);
+        } catch (InvalidAlgorithmParameterException e) {
+            throw new CryptographyException(ExceptionInfo.INVALID_ALGORITHM_PARAMETER_EXCEPTION_INFO + algorithmParameterSpec.toString(), e);
+        }
+        try {
+            return cipher.doFinal(data);
+        } catch (IllegalBlockSizeException e) {
+            throw new CryptographyException(ExceptionInfo.ILLEGAL_BLOCK_SIZE_EXCEPTION_INFO, e);
+        } catch (BadPaddingException e) {
+            throw new CryptographyException(ExceptionInfo.BAD_PADDING_EXCEPTION_INFO, e);
+        }
+    }
+
+    /**
+     * 解密操作
+     * @param data 需要解密的数据
+     * @param key 密钥对象
+     * @param secureRandom 安全随机数
+     * @return 解密后的数据
+     */
+    protected byte[] decrypt(byte[] data, Key key, SecureRandom secureRandom) {
+        Cipher cipher = getCipher();
+        try {
+            cipher.init(Cipher.DECRYPT_MODE, key, secureRandom);
+        } catch (InvalidKeyException e) {
+            throw new CryptographyException(ExceptionInfo.INVALID_KEY_EXCEPTION_INFO + key.toString(), e);
+        }
+        try {
+            return cipher.doFinal(data);
+        } catch (IllegalBlockSizeException e) {
+            throw new CryptographyException(ExceptionInfo.ILLEGAL_BLOCK_SIZE_EXCEPTION_INFO, e);
+        } catch (BadPaddingException e) {
+            throw new CryptographyException(ExceptionInfo.BAD_PADDING_EXCEPTION_INFO, e);
+        }
+    }
+
+    /**
+     * 解密操作
+     * @param data 需要解密的数据
+     * @param key 密钥对象
+     * @param algorithmParameterSpec 算法参数规范材料
+     * @param secureRandom 安全随机数
+     * @return 解密后的数据
+     */
+    protected byte[] decrypt(byte[] data, Key key, AlgorithmParameterSpec algorithmParameterSpec, SecureRandom secureRandom) {
+        Cipher cipher = getCipher();
+        try {
+            cipher.init(Cipher.DECRYPT_MODE, key, algorithmParameterSpec, secureRandom);
+        } catch (InvalidKeyException e) {
+            throw new CryptographyException(ExceptionInfo.INVALID_KEY_EXCEPTION_INFO + key.toString(), e);
+        } catch (InvalidAlgorithmParameterException e) {
+            throw new CryptographyException(ExceptionInfo.INVALID_ALGORITHM_PARAMETER_EXCEPTION_INFO + algorithmParameterSpec.toString(), e);
         }
         try {
             return cipher.doFinal(data);
