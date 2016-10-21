@@ -10,6 +10,16 @@
 
 ![crypto API类图](http://jisonami.org/images/Java_Security/Crypto/CryptoClassDiagram.png)
 
+### 支持的算法列表
+
+对称密钥算法：DES、DESede、AES、RC2、RC4、Blowfish、IDEA（需要BouncyCastle扩展支持）
+
+非对称密钥算法：RSA、ELGAMAL（需要BouncyCastle扩展支持）
+
+密钥协商算法：DH、ECDH（需要BouncyCastle扩展支持）
+
+基于口令的加解密算法：PBEWithMD5AndDES、PBEWithMD5AndTripleDES、PBEWithSHA1AndDESede、PBEWithSHA1AndRC2_40，其余算法需要BouncyCastle扩展支持
+
 ### 需要注意的地方
 
 #### Java安全API出口限制
@@ -281,6 +291,93 @@ String encryptData1 = keyAgreementCryptography.encrypt(data, keyAgreementCryptog
 System.out.println("乙方加密后数据：" + encryptData1);
 String decryptData1 = keyAgreementCryptography.decrypt(encryptData1, keyAgreementCryptography.decodeKey(secretKey));
 System.out.println("甲方解密后数据：" + decryptData1);
+```
+
+### PBECryptography实现基于口令的加解密算法
+
+#### 默认使用PBEWithMD5AndDES算法
+
+```java
+PBECryptography pbeCryptography = new PBECryptography();
+String password = "password";
+System.out.println("口令：" + password);
+String salt = pbeCryptography.encodeSalt(pbeCryptography.initSalt());
+System.out.println("盐：" + salt);
+String encryptData = pbeCryptography.encrypt(data, password, salt);
+System.out.println("加密前数据：" + data);
+System.out.println("加密后数据：" + encryptData);
+String decryptData = pbeCryptography.decrypt(encryptData, password, salt);
+System.out.println("解密后数据：" + decryptData);
+```
+
+#### 使用PBEWithMD5AndTripleDES算法
+
+```java
+Configuration configuration = new Configuration();
+configuration.setKeyAlgorithm(Algorithms.PBE_WITH_MD5_AND_TripleDES).setCipherAlgorithm(Algorithms.PBE_WITH_MD5_AND_TripleDES).setPbeIterationCount(100);
+PBECryptography pbeCryptography = new PBECryptography(configuration);
+String password = "password";
+System.out.println("口令：" + password);
+String salt = pbeCryptography.encodeSalt(pbeCryptography.initSalt());
+System.out.println("盐：" + salt);
+String encryptData = pbeCryptography.encrypt(data, password, salt);
+System.out.println("加密前数据：" + data);
+System.out.println("加密后数据：" + encryptData);
+String decryptData = pbeCryptography.decrypt(encryptData, password, salt);
+System.out.println("解密后数据：" + decryptData);
+```
+
+#### 使用PBEWithSHA1AndDESede算法
+
+```java
+Configuration configuration = new Configuration();
+configuration.setKeyAlgorithm(Algorithms.PBE_WITH_SHA1_AND_DESede).setCipherAlgorithm(Algorithms.PBE_WITH_SHA1_AND_DESede).setPbeIterationCount(100);
+PBECryptography pbeCryptography = new PBECryptography(configuration);
+String password = "password";
+System.out.println("口令：" + password);
+String salt = pbeCryptography.encodeSalt(pbeCryptography.initSalt());
+System.out.println("盐：" + salt);
+String encryptData = pbeCryptography.encrypt(data, password, salt);
+System.out.println("加密前数据：" + data);
+System.out.println("加密后数据：" + encryptData);
+String decryptData = pbeCryptography.decrypt(encryptData, password, salt);
+System.out.println("解密后数据：" + decryptData);
+```
+
+#### 使用PBEWithSHA1AndRC2_40算法
+
+```java
+Configuration configuration = new Configuration();
+configuration.setKeyAlgorithm(Algorithms.PBE_WITH_SHA1_AND_RC2_40).setCipherAlgorithm(Algorithms.PBE_WITH_SHA1_AND_RC2_40).setPbeIterationCount(100);
+PBECryptography pbeCryptography = new PBECryptography(configuration);
+String password = "password";
+System.out.println("口令：" + password);
+String salt = pbeCryptography.encodeSalt(pbeCryptography.initSalt());
+System.out.println("盐：" + salt);
+String encryptData = pbeCryptography.encrypt(data, password, salt);
+System.out.println("加密前数据：" + data);
+System.out.println("加密后数据：" + encryptData);
+String decryptData = pbeCryptography.decrypt(encryptData, password, salt);
+System.out.println("解密后数据：" + decryptData);
+```
+
+#### 使用PBEWithSHAAndIDEA-CBC算法
+
+```java
+BouncyCastleProvider bouncyCastleProvider = new BouncyCastleProvider();
+Security.addProvider(bouncyCastleProvider);
+Configuration configuration = new Configuration();
+configuration.setKeyAlgorithm(Algorithms.PBE_WITH_SHA_AND_IDEA_CBC).setCipherAlgorithm(Algorithms.PBE_WITH_SHA_AND_IDEA_CBC).setPbeIterationCount(100);
+PBECryptography pbeCryptography = new PBECryptography(configuration);
+String password = "password";
+System.out.println("口令：" + password);
+String salt = pbeCryptography.encodeSalt(pbeCryptography.initSalt());
+System.out.println("盐：" + salt);
+String encryptData = pbeCryptography.encrypt(data, password, salt);
+System.out.println("加密前数据：" + data);
+System.out.println("加密后数据：" + encryptData);
+String decryptData = pbeCryptography.decrypt(encryptData, password, salt);
+System.out.println("解密后数据：" + decryptData);
 ```
 
 更详细的API请参考[crypto的JavaDoc文档](http://jisonami.org/docs/Java_Security/Crypto/doc/)

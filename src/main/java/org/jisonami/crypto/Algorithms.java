@@ -3,6 +3,7 @@ package org.jisonami.crypto;
 /**
  * <p>Created by jisonami on 16-10-14.</p>
  * <p>常用的密码算法参数常量</p>
+ * <p>常量未列全</p>
  *
  * @author jisonami
  * @since 0.0.1
