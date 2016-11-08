@@ -22,10 +22,12 @@ import java.security.spec.KeySpec;
  * @see AbstractCryptography
  * @since 0.0.1
  */
-public class PBECryptography extends AbstractCryptography{
+public class PBECryptography extends AbstractCryptography {
 
     public PBECryptography() {
-        getConfiguration().setKeyAlgorithm(Algorithms.PBE_WITH_MD5_AND_DES).setCipherAlgorithm(Algorithms.PBE_WITH_MD5_AND_DES).setPbeIterationCount(100);
+        getConfiguration().setKeyAlgorithm(Algorithms.PBE_WITH_MD5_AND_DES).
+                setCipherAlgorithm(Algorithms.PBE_WITH_MD5_AND_DES).
+                setPbeIterationCount(Algorithms.PBE_ITERATION_COUNT_100);
     }
 
     public PBECryptography(Configuration configuration) {
@@ -34,12 +36,13 @@ public class PBECryptography extends AbstractCryptography{
 
     /**
      * 获取对称密钥工厂，用于还原密钥对象
+     *
      * @return 对称密钥工厂对象
      */
     protected SecretKeyFactory getSecretKeyFactory() {
         SecretKeyFactory keyFactory = null;
         try {
-            if(getConfiguration().getProviderName() !=null && !"".equals(getConfiguration().getProviderName())){
+            if (getConfiguration().getProviderName() != null && !"".equals(getConfiguration().getProviderName())) {
                 keyFactory = SecretKeyFactory.getInstance(getConfiguration().getKeyAlgorithm(), getConfiguration().getProviderName());
             } else if (getConfiguration().getProvider() != null) {
                 keyFactory = SecretKeyFactory.getInstance(getConfiguration().getKeyAlgorithm(), getConfiguration().getProvider());
@@ -56,11 +59,12 @@ public class PBECryptography extends AbstractCryptography{
 
     /**
      * 根据口令获取密钥对象
+     *
      * @param password 口令
      * @return 密钥对象
      */
     private Key toKey(String password) {
-        KeySpec keySpec =  new PBEKeySpec(password.toCharArray());
+        KeySpec keySpec = new PBEKeySpec(password.toCharArray());
         SecretKeyFactory secretKeyFactory = getSecretKeyFactory();
         try {
             return secretKeyFactory.generateSecret(keySpec);
@@ -71,17 +75,19 @@ public class PBECryptography extends AbstractCryptography{
 
     /**
      * 初始化盐
+     *
      * @return 盐的二进制形式
      */
-    public byte[] initSalt(){
-        return new SecureRandom().generateSeed(8);
+    public byte[] initSalt() {
+        return new SecureRandom().generateSeed(Algorithms.SALT_8);
     }
 
     /**
      * 加密操作
-     * @param data 需要加密的数据
+     *
+     * @param data     需要加密的数据
      * @param password 口令
-     * @param salt 盐
+     * @param salt     盐
      * @return 加密后的数据
      */
     public byte[] encrypt(byte[] data, String password, byte[] salt) {
@@ -92,9 +98,10 @@ public class PBECryptography extends AbstractCryptography{
 
     /**
      * 加密操作
-     * @param data 需要加密的数据
+     *
+     * @param data     需要加密的数据
      * @param password 口令
-     * @param salt 盐
+     * @param salt     盐
      * @return 加密后的数据
      */
     public String encrypt(String data, String password, String salt) {
@@ -108,9 +115,10 @@ public class PBECryptography extends AbstractCryptography{
 
     /**
      * 解密操作
-     * @param data 需要解密的数据
+     *
+     * @param data     需要解密的数据
      * @param password 口令
-     * @param salt 盐
+     * @param salt     盐
      * @return 解密后的数据
      */
     public byte[] decrypt(byte[] data, String password, byte[] salt) {
@@ -121,9 +129,10 @@ public class PBECryptography extends AbstractCryptography{
 
     /**
      * 解密操作
-     * @param data 需要解密的数据
+     *
+     * @param data     需要解密的数据
      * @param password 口令
-     * @param salt 盐
+     * @param salt     盐
      * @return 解密后的数据
      */
     public String decrypt(String data, String password, String salt) {
@@ -137,6 +146,7 @@ public class PBECryptography extends AbstractCryptography{
 
     /**
      * 将二进制盐转换成字符串形式
+     *
      * @param salt 盐的二进制形式
      * @return 盐的字符串形式
      */
@@ -146,6 +156,7 @@ public class PBECryptography extends AbstractCryptography{
 
     /**
      * 将字符串盐转换成二进制形式
+     *
      * @param salt 盐的字符串形式
      * @return 盐的二进制形式
      */

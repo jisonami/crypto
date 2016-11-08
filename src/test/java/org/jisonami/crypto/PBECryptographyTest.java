@@ -29,7 +29,7 @@ public class PBECryptographyTest {
     @Test
     public void testPBEWithMD5AndTripleDES() {
         Configuration configuration = new Configuration();
-        configuration.setKeyAlgorithm(Algorithms.PBE_WITH_MD5_AND_TripleDES).setCipherAlgorithm(Algorithms.PBE_WITH_MD5_AND_TripleDES).setPbeIterationCount(100);
+        configuration.setKeyAlgorithm(Algorithms.PBE_WITH_MD5_AND_TRIPLEDES).setCipherAlgorithm(Algorithms.PBE_WITH_MD5_AND_TRIPLEDES).setPbeIterationCount(100);
         PBECryptography pbeCryptography = new PBECryptography(configuration);
         String password = "password";
         System.out.println("口令：" + password);
@@ -45,7 +45,7 @@ public class PBECryptographyTest {
     @Test
     public void testPBEWithSHA1AndDESede() {
         Configuration configuration = new Configuration();
-        configuration.setKeyAlgorithm(Algorithms.PBE_WITH_SHA1_AND_DESede).setCipherAlgorithm(Algorithms.PBE_WITH_SHA1_AND_DESede).setPbeIterationCount(100);
+        configuration.setKeyAlgorithm(Algorithms.PBE_WITH_SHA1_AND_DESEDE).setCipherAlgorithm(Algorithms.PBE_WITH_SHA1_AND_DESEDE).setPbeIterationCount(100);
         PBECryptography pbeCryptography = new PBECryptography(configuration);
         String password = "password";
         System.out.println("口令：" + password);

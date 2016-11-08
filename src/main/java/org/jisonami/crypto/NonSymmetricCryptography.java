@@ -16,20 +16,21 @@ import java.security.Key;
  * @see AbstractCryptography
  * @since 0.0.1
  */
-public class NonSymmetricCryptography extends AbstractNonSymmetricCryptography{
+public class NonSymmetricCryptography extends AbstractNonSymmetricCryptography {
 
     public NonSymmetricCryptography() {
-        getConfiguration().setKeyAlgorithm(Algorithms.RSA).setCipherAlgorithm(Algorithms.RSA_ECB_PKCS1PADDING).setKeySize(1024);
+        getConfiguration().setKeyAlgorithm(Algorithms.RSA).setCipherAlgorithm(Algorithms.RSA_ECB_PKCS1PADDING).setKeySize(Algorithms.KEYSIZE_1024);
     }
 
-    public NonSymmetricCryptography(Configuration configuration){
+    public NonSymmetricCryptography(Configuration configuration) {
         super(configuration);
     }
 
     /**
      * 使用公钥加密操作
+     *
      * @param data 需要加密的数据
-     * @param key 公钥的二进制形式
+     * @param key  公钥的二进制形式
      * @return 加密后的数据
      */
     public String encryptByPublicKey(String data, byte[] key) {
@@ -44,8 +45,9 @@ public class NonSymmetricCryptography extends AbstractNonSymmetricCryptography{
 
     /**
      * 使用公钥加密操作
+     *
      * @param data 需要加密的数据
-     * @param key 密钥的二进制形式
+     * @param key  密钥的二进制形式
      * @return 加密后的数据 Base64URL形式
      */
     public String encryptURLByPublicKey(String data, byte[] key) {
@@ -60,8 +62,9 @@ public class NonSymmetricCryptography extends AbstractNonSymmetricCryptography{
 
     /**
      * 使用公钥加密操作
+     *
      * @param data 需要加密的数据
-     * @param key 公钥的二进制形式
+     * @param key  公钥的二进制形式
      * @return 加密后的数据
      */
     public byte[] encryptByPublicKey(byte[] data, byte[] key) {
@@ -72,8 +75,9 @@ public class NonSymmetricCryptography extends AbstractNonSymmetricCryptography{
 
     /**
      * 使用公钥解密操作
+     *
      * @param data 需要解密的数据
-     * @param key 公钥的二进制形式
+     * @param key  公钥的二进制形式
      * @return 解密后的数据
      */
     public String decryptByPublicKey(String data, byte[] key) {
@@ -87,8 +91,9 @@ public class NonSymmetricCryptography extends AbstractNonSymmetricCryptography{
 
     /**
      * 使用公钥解密操作
+     *
      * @param data 需要解密的数据 Base64URL形式
-     * @param key 公钥钥的二进制形式
+     * @param key  公钥钥的二进制形式
      * @return 解密后的数据
      */
     public String decryptURLByPublicKey(String data, byte[] key) {
@@ -103,8 +108,9 @@ public class NonSymmetricCryptography extends AbstractNonSymmetricCryptography{
 
     /**
      * 使用公钥解密操作
+     *
      * @param data 需要解密的数据
-     * @param key 公钥的二进制形式
+     * @param key  公钥的二进制形式
      * @return 解密后的数据
      */
     public byte[] decryptByPublicKey(byte[] data, byte[] key) {
@@ -114,8 +120,9 @@ public class NonSymmetricCryptography extends AbstractNonSymmetricCryptography{
 
     /**
      * 使用私钥加密操作
+     *
      * @param data 需要加密的数据
-     * @param key 私钥的二进制形式
+     * @param key  私钥的二进制形式
      * @return 加密后的数据
      */
     public String encryptByPrivateKey(String data, byte[] key) {
@@ -130,8 +137,9 @@ public class NonSymmetricCryptography extends AbstractNonSymmetricCryptography{
 
     /**
      * 使用私钥加密操作
+     *
      * @param data 需要加密的数据
-     * @param key 私钥的二进制形式
+     * @param key  私钥的二进制形式
      * @return 加密后的数据 Base64URL形式
      */
     public String encryptURLByPrivateKey(String data, byte[] key) {
@@ -146,8 +154,9 @@ public class NonSymmetricCryptography extends AbstractNonSymmetricCryptography{
 
     /**
      * 使用私钥加密操作
+     *
      * @param data 需要加密的数据
-     * @param key 私钥的二进制形式
+     * @param key  私钥的二进制形式
      * @return 加密后的数据
      */
     public byte[] encryptByPrivateKey(byte[] data, byte[] key) {
@@ -158,8 +167,9 @@ public class NonSymmetricCryptography extends AbstractNonSymmetricCryptography{
 
     /**
      * 使用私钥解密操作
+     *
      * @param data 需要解密的数据
-     * @param key 私钥的二进制形式
+     * @param key  私钥的二进制形式
      * @return 解密后的数据
      */
     public String decryptByPrivateKey(String data, byte[] key) {
@@ -173,8 +183,9 @@ public class NonSymmetricCryptography extends AbstractNonSymmetricCryptography{
 
     /**
      * 使用私钥解密操作
+     *
      * @param data 需要解密的数据 Base64URL形式
-     * @param key 私钥的二进制形式
+     * @param key  私钥的二进制形式
      * @return 解密后的数据
      */
     public String decryptURLByPrivateKey(String data, byte[] key) {
@@ -189,8 +200,9 @@ public class NonSymmetricCryptography extends AbstractNonSymmetricCryptography{
 
     /**
      * 使用私钥解密操作
+     *
      * @param data 需要解密的数据
-     * @param key 私钥的二进制形式
+     * @param key  私钥的二进制形式
      * @return 解密后的数据
      */
     public byte[] decryptByPrivateKey(byte[] data, byte[] key) {

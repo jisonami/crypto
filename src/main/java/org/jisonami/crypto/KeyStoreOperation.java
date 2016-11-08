@@ -3,7 +3,13 @@ package org.jisonami.crypto;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.security.*;
+import java.security.Key;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.UnrecoverableKeyException;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
@@ -21,16 +27,17 @@ public class KeyStoreOperation {
 
     /**
      * 在密钥库中获取私钥对象
+     *
      * @param keyStorePath 密钥库地址
-     * @param alias 私钥别名
-     * @param password 密钥库密码
+     * @param alias        私钥别名
+     * @param password     密钥库密码
      * @return 私钥对象
      */
-    public PrivateKey getPrivateKeyByKeyStore(String keyStorePath, String alias, String password){
+    public PrivateKey getPrivateKeyByKeyStore(String keyStorePath, String alias, String password) {
         KeyStore keyStore = getKeyStore(keyStorePath, password);
         try {
             Key key = keyStore.getKey(alias, password.toCharArray());
-            if(key instanceof PrivateKey){
+            if (key instanceof PrivateKey) {
                 return (PrivateKey) key;
             } else {
                 throw new CryptographyException("别名为" + alias + "的密钥不是私钥");
@@ -46,29 +53,32 @@ public class KeyStoreOperation {
 
     /**
      * 在证书中获取公钥对象
+     *
      * @param certificate 证书对象
      * @return 公钥对象
      */
-    public PublicKey getPublicKeyByCertficate(Certificate certificate){
+    public PublicKey getPublicKeyByCertficate(Certificate certificate) {
         return certificate.getPublicKey();
     }
 
     /**
      * 在证书中获取公钥对象
+     *
      * @param certficatePath 证书路径
      * @return 公钥对象
      */
-    public PublicKey getPublicKeyByCertficate(String certficatePath){
+    public PublicKey getPublicKeyByCertficate(String certficatePath) {
         Certificate certificate = this.getCertificate(certficatePath);
         return certificate.getPublicKey();
     }
 
     /**
      * 通过证书路径获取证书对象
+     *
      * @param certficatePath 证书路径
      * @return 证书对象
      */
-    public Certificate getCertificate(String certficatePath){
+    public Certificate getCertificate(String certficatePath) {
         CertificateFactory certificateFactory = null;
         try {
             certificateFactory = CertificateFactory.getInstance(CERT_TYPE);
@@ -97,12 +107,13 @@ public class KeyStoreOperation {
 
     /**
      * 在密钥库中获取证书
+     *
      * @param keyStorePath 密钥库路径
-     * @param alias 证书别名
-     * @param password 密钥库密码
+     * @param alias        证书别名
+     * @param password     密钥库密码
      * @return 证书对象
      */
-    public Certificate getCertficate(String keyStorePath, String alias, String password){
+    public Certificate getCertficate(String keyStorePath, String alias, String password) {
         KeyStore keyStore = this.getKeyStore(keyStorePath, password);
         try {
             return keyStore.getCertificate(alias);
@@ -113,8 +124,9 @@ public class KeyStoreOperation {
 
     /**
      * 通过密钥库路径获取密钥库对象
+     *
      * @param keyStorePath 密钥库路径
-     * @param password 密钥库密码
+     * @param password     密钥库密码
      * @return 密钥库对象
      */
     public KeyStore getKeyStore(String keyStorePath, String password) {

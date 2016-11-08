@@ -7,23 +7,22 @@ package org.jisonami.crypto;
  * @author jisonami
  * @since 0.0.1
  */
-public class CryptographyException extends RuntimeException
-{
+public class CryptographyException extends RuntimeException {
 
-	private static final long serialVersionUID = 1067809060581174305L;
+    private static final long serialVersionUID = 1067809060581174305L;
 
-	public CryptographyException() {
-	}
+    public CryptographyException() {
+    }
 
-	public CryptographyException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public CryptographyException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	public CryptographyException(String message) {
-		super(message);
-	}
+    public CryptographyException(String message) {
+        super(message);
+    }
 
-	public CryptographyException(Throwable cause) {
-		super(cause);
-	}
+    public CryptographyException(Throwable cause) {
+        super(cause);
+    }
 }

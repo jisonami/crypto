@@ -7,7 +7,14 @@ import javax.crypto.SecretKey;
 import javax.crypto.interfaces.DHKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
-import java.security.*;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.interfaces.ECKey;
 import java.security.spec.AlgorithmParameterSpec;
 import java.util.HashMap;
@@ -26,7 +33,7 @@ import java.util.Map;
 public class KeyAgreementCryptography extends AbstractNonSymmetricCryptography {
 
     public KeyAgreementCryptography() {
-        getConfiguration().setKeyAlgorithm(Algorithms.DH).setCipherAlgorithm(Algorithms.DES).setKeySize(1024);
+        getConfiguration().setKeyAlgorithm(Algorithms.DH).setCipherAlgorithm(Algorithms.DES).setKeySize(Algorithms.KEYSIZE_1024);
     }
 
     public KeyAgreementCryptography(Configuration configuration) {
@@ -35,14 +42,14 @@ public class KeyAgreementCryptography extends AbstractNonSymmetricCryptography {
 
     /**
      * 加密操作
+     *
      * @param data 需要加密的数据
-     * @param key 密钥的二进制形式
+     * @param key  密钥的二进制形式
      * @return 加密后的数据
      */
     public String encrypt(String data, byte[] key) {
-        byte[] result = null;
         try {
-            result = this.encrypt(data.getBytes(getConfiguration().getCharset()), key);
+            byte[] result = this.encrypt(data.getBytes(getConfiguration().getCharset()), key);
             return new String(Base64.encodeBase64(result), getConfiguration().getCharset());
         } catch (UnsupportedEncodingException e) {
             throw new CryptographyException(ExceptionInfo.UNSUPPORTED_ENCODING_EXCEPTION_INFO + getConfiguration().getCharset(), e);
@@ -51,14 +58,14 @@ public class KeyAgreementCryptography extends AbstractNonSymmetricCryptography {
 
     /**
      * 加密操作
+     *
      * @param data 需要加密的数据
-     * @param key 密钥的二进制形式
+     * @param key  密钥的二进制形式
      * @return 加密后的数据 Base64URL形式
      */
     public String encryptURL(String data, byte[] key) {
-        byte[] result = null;
         try {
-            result = this.encrypt(data.getBytes(getConfiguration().getCharset()), key);
+            byte[] result = this.encrypt(data.getBytes(getConfiguration().getCharset()), key);
             return new String(Base64.encodeBase64URLSafe(result), getConfiguration().getCharset());
         } catch (UnsupportedEncodingException e) {
             throw new CryptographyException(ExceptionInfo.UNSUPPORTED_ENCODING_EXCEPTION_INFO + getConfiguration().getCharset(), e);
@@ -67,8 +74,9 @@ public class KeyAgreementCryptography extends AbstractNonSymmetricCryptography {
 
     /**
      * 加密操作
+     *
      * @param data 需要加密的数据
-     * @param key 密钥的二进制形式
+     * @param key  密钥的二进制形式
      * @return 加密后的数据
      */
     public byte[] encrypt(byte[] data, byte[] key) {
@@ -79,8 +87,9 @@ public class KeyAgreementCryptography extends AbstractNonSymmetricCryptography {
 
     /**
      * 解密操作
+     *
      * @param data 需要解密的数据
-     * @param key 密钥的二进制形式
+     * @param key  密钥的二进制形式
      * @return 解密后的数据
      */
     public String decrypt(String data, byte[] key) {
@@ -94,14 +103,14 @@ public class KeyAgreementCryptography extends AbstractNonSymmetricCryptography {
 
     /**
      * 解密操作
+     *
      * @param data 需要解密的数据 Base64URL形式
-     * @param key 密钥的二进制形式
+     * @param key  密钥的二进制形式
      * @return 解密后的数据
      */
     public String decryptURL(String data, byte[] key) {
-        byte[] result = null;
         try {
-            result = Base64.decodeBase64(data.getBytes(getConfiguration().getCharset()));
+            byte[] result = Base64.decodeBase64(data.getBytes(getConfiguration().getCharset()));
             return new String(this.decrypt(result, key), getConfiguration().getCharset());
         } catch (UnsupportedEncodingException e) {
             throw new CryptographyException(ExceptionInfo.UNSUPPORTED_ENCODING_EXCEPTION_INFO + getConfiguration().getCharset(), e);
@@ -110,8 +119,9 @@ public class KeyAgreementCryptography extends AbstractNonSymmetricCryptography {
 
     /**
      * 解密操作
+     *
      * @param data 需要解密的数据
-     * @param key 密钥的二进制形式
+     * @param key  密钥的二进制形式
      * @return 解密后的数据
      */
     public byte[] decrypt(byte[] data, byte[] key) {
@@ -121,16 +131,18 @@ public class KeyAgreementCryptography extends AbstractNonSymmetricCryptography {
 
     /**
      * 将对称密钥二进制形式转换成对称密钥
+     *
      * @param key 对称密钥的二进制形式
      * @return 对称密钥对象
      */
-    public SecretKey toSecretKey(byte[] key){
+    public SecretKey toSecretKey(byte[] key) {
         return new SecretKeySpec(key, getConfiguration().getCipherAlgorithm());
     }
 
     /**
      * 根据甲方私钥和乙方公钥生成甲方本地对称密钥，或者根据乙方私钥和甲方公钥生成乙方本地对称密钥
-     * @param publicKey 公钥二进制形式
+     *
+     * @param publicKey  公钥二进制形式
      * @param privateKey 私钥二进制形式
      * @return 对称密钥对象
      */
@@ -153,27 +165,29 @@ public class KeyAgreementCryptography extends AbstractNonSymmetricCryptography {
         } catch (InvalidKeyException e) {
             throw new CryptographyException(ExceptionInfo.INVALID_KEY_EXCEPTION_INFO + pubKey.toString(), e);
         }
-        SecretKey secretKey = null;
         try {
-            secretKey = keyAgreement.generateSecret(getConfiguration().getCipherAlgorithm());
+            SecretKey secretKey = keyAgreement.generateSecret(getConfiguration().getCipherAlgorithm());
             return secretKey.getEncoded();
         } catch (NoSuchAlgorithmException e) {
             throw new CryptographyException(ExceptionInfo.NO_SUCH_ALGORITHM_EXCEPTION_INFO + getConfiguration().getCipherAlgorithm(), e);
         } catch (InvalidKeyException e) {
-            throw new CryptographyException(ExceptionInfo.INVALID_KEY_EXCEPTION_INFO + secretKey.toString(), e);
+            throw new CryptographyException(ExceptionInfo.INVALID_KEY_EXCEPTION_INFO, e);
         }
     }
 
     /**
      * 初始化密钥协商算法的甲方密钥对
+     *
      * @return 甲方密钥对
      */
+    @Override
     public Map<String, Key> initKey() {
         return super.initKey();
     }
 
     /**
      * 初始化密钥协商算法的乙方密钥对
+     *
      * @param publicKey 甲方公钥的二进制形式
      * @return 乙方密钥对
      */
@@ -181,9 +195,9 @@ public class KeyAgreementCryptography extends AbstractNonSymmetricCryptography {
         PublicKey pubKey = this.toPublicKey(publicKey);
         KeyPairGenerator keyPairGenerator = getKeyPairGenerator();
         AlgorithmParameterSpec algorithmParameterSpec = null;
-        if(pubKey instanceof DHKey){
+        if (pubKey instanceof DHKey) {
             algorithmParameterSpec = ((DHKey) pubKey).getParams();
-        } else if(pubKey instanceof ECKey){
+        } else if (pubKey instanceof ECKey) {
             algorithmParameterSpec = ((ECKey) pubKey).getParams();
         } else {
             throw new CryptographyException(ExceptionInfo.NO_SUCH_ALGORITHM_EXCEPTION_INFO + getConfiguration().getKeyAlgorithm());
@@ -199,7 +213,6 @@ public class KeyAgreementCryptography extends AbstractNonSymmetricCryptography {
         keyMap.put(PUBLIC_KEY, keyPair.getPublic());
         return keyMap;
     }
-
 
 
 }

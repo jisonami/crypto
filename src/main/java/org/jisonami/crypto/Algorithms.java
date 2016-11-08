@@ -1,8 +1,7 @@
 package org.jisonami.crypto;
 
 /**
- * <p>Created by jisonami on 16-10-14.</p>
- * <p>常用的密码算法参数常量</p>
+ * <p>常用的密码算法参数常量.</p>
  * <p>常量未列全</p>
  *
  * @author jisonami
@@ -24,13 +23,33 @@ public interface Algorithms {
     String IDEA = "IDEA";
 
     // 基于口令的加解密算法PBE相关
-    String PBE_WITH_MD5_AND_DES = "PBEWithMD5AndDES";   // DES密钥默认长度56
-    String PBE_WITH_MD5_AND_TripleDES = "PBEWithMD5AndTripleDES";   // TripleDES密钥默认长度168
-    String PBE_WITH_SHA1_AND_DESede = "PBEWithSHA1AndDESede";   // DESede密钥默认长度168
-    String PBE_WITH_SHA1_AND_RC2_40 = "PBEWithSHA1AndRC2_40";   // RC2_40密钥默认长度128
-    String PBE_WITH_SHA_AND_IDEA_CBC = "PBEWithSHAAndIDEA-CBC"; // IDEA密钥默认长度128
 
-     // 密钥协商算法相关
+    /**
+     * DES密钥默认长度56.
+     */
+    String PBE_WITH_MD5_AND_DES = "PBEWithMD5AndDES";
+
+    /**
+     * TripleDES密钥默认长度168.
+     */
+    String PBE_WITH_MD5_AND_TRIPLEDES = "PBEWithMD5AndTripleDES";
+
+    /**
+     * DESede密钥默认长度168.
+     */
+    String PBE_WITH_SHA1_AND_DESEDE = "PBEWithSHA1AndDESede";
+
+    /**
+     * RC2_40密钥默认长度128.
+     */
+    String PBE_WITH_SHA1_AND_RC2_40 = "PBEWithSHA1AndRC2_40";
+
+    /**
+     * IDEA密钥默认长度128.
+     */
+    String PBE_WITH_SHA_AND_IDEA_CBC = "PBEWithSHAAndIDEA-CBC";
+
+    // 密钥协商算法相关
     String DH = "DH";
     String ECDH = "ECDH";
 
@@ -46,7 +65,7 @@ public interface Algorithms {
     String ECDSA = "ECDSA";
     String ELGAMAL = "ELGAMAL";
     String ELGAMAL_ECB_PKCS1PADDING = "ELGAMAL/ECB/PKCS1Padding";
-    
+
     // 签名算法相关
     String NONE_WIEH_RSA = "NONEwithRSA";
     String MD2_WIEH_RSA = "MD2withRSA";
@@ -68,4 +87,20 @@ public interface Algorithms {
     String SHA384_WIEH_ECDSA = "SHA384withECDSA";
     String SHA512_WIEH_ECDSA = "SHA512withECDSA";
 
+    // keySize
+    int KEYSIZE_56 = 56;
+    int KEYSIZE_64 = 64;
+    int KEYSIZE_112 = 112;
+    int KEYSIZE_128 = 128;
+    int KEYSIZE_192 = 192;
+    int KEYSIZE_256 = 256;
+    int KEYSIZE_512 = 512;
+    int KEYSIZE_1024 = 1024;
+    int KEYSIZE_2048 = 2048;
+
+    // PbeIterationCount
+    int PBE_ITERATION_COUNT_100 = 100;
+
+    // salt
+    int SALT_8 = 8;
 }

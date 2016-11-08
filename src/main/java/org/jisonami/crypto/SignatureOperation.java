@@ -3,7 +3,12 @@ package org.jisonami.crypto;
 import org.apache.commons.codec.binary.Base64;
 
 import java.io.UnsupportedEncodingException;
-import java.security.*;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.Signature;
+import java.security.SignatureException;
 
 /**
  * <p>Created by jisonami on 16-10-15.</p>
@@ -18,7 +23,7 @@ public class SignatureOperation {
 
     private Configuration configuration = new Configuration();
 
-    public SignatureOperation(){
+    public SignatureOperation() {
         configuration.setSignatureAlgorithm(Algorithms.SHA1_WIEH_RSA);
     }
 
@@ -28,7 +33,8 @@ public class SignatureOperation {
 
     /**
      * 签名操作
-     * @param data 需要签名的数据
+     *
+     * @param data       需要签名的数据
      * @param privateKey 私钥对象
      * @return 签名
      */
@@ -54,7 +60,8 @@ public class SignatureOperation {
 
     /**
      * 签名操作
-     * @param data 需要签名的数据
+     *
+     * @param data       需要签名的数据
      * @param privateKey 私钥对象
      * @return 签名
      */
@@ -68,9 +75,10 @@ public class SignatureOperation {
 
     /**
      * 验证签名操作
-     * @param data 需要验证签名的数据
+     *
+     * @param data      需要验证签名的数据
      * @param publicKey 公钥对象
-     * @param sign 签名
+     * @param sign      签名
      * @return 签名验证结果，验证成功返回true，验证失败返回false
      */
     public boolean verify(byte[] data, PublicKey publicKey, byte[] sign) {
@@ -95,9 +103,10 @@ public class SignatureOperation {
 
     /**
      * 验证签名操作
-     * @param data 需要验证签名的数据
+     *
+     * @param data      需要验证签名的数据
      * @param publicKey 公钥对象
-     * @param sign 签名
+     * @param sign      签名
      * @return 签名验证结果，验证成功返回true，验证失败返回false
      */
     public boolean verify(String data, PublicKey publicKey, String sign) {

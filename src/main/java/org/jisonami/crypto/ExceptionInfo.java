@@ -1,7 +1,5 @@
 package org.jisonami.crypto;
 
-import java.security.spec.InvalidKeySpecException;
-
 /**
  * <p>Created by jisonami on 2016/10/20.</p>
  * <p>抛出的异常信息</p>
